@@ -38,7 +38,7 @@ export default function ToDo1({ navigation }: props): JSX.Element {
         <Pressable onPress={() => deleteToDoHandler(item.id)}>
           <View>
             <Text>
-              {item.id} {item.title} {item.checked}
+              {item.id} {item.title} {item.checked ? "DONE" : "TO DO"}
             </Text>
           </View>
         </Pressable>

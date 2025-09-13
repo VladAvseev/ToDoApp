@@ -20,9 +20,6 @@ export const PageContainer = ({ navigation, children }: props) => {
         <Tab navigation={navigation} route="ToDo1">
           <Text>ToDo1</Text>
         </Tab>
-        <Tab navigation={navigation} route="ToDo2">
-          <Text>ToDo2</Text>
-        </Tab>
       </Tabs>
     </View>
   );
