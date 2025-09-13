@@ -1,12 +1,12 @@
 import { NavigationProp } from "@react-navigation/native";
 import { ReactNode } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Tabs } from "../Tabs";
 import { Tab } from "../Tabs/Tab";
 
 type props = {
   navigation: NavigationProp<{}>;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export const PageContainer = ({ navigation, children }: props) => {
@@ -15,13 +15,13 @@ export const PageContainer = ({ navigation, children }: props) => {
       {children}
       <Tabs>
         <Tab navigation={navigation} route="Home">
-          <View>Home</View>
+          <Text>Home</Text>
         </Tab>
-        <Tab navigation={navigation} route="Profile">
-          <View>Profile</View>
+        <Tab navigation={navigation} route="ToDo1">
+          <Text>ToDo1</Text>
         </Tab>
-        <Tab navigation={navigation} route="Settings">
-          <View>Settings</View>
+        <Tab navigation={navigation} route="ToDo2">
+          <Text>ToDo2</Text>
         </Tab>
       </Tabs>
     </View>
