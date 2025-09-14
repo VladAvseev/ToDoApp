@@ -1,13 +1,13 @@
 import React, { JSX } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Navigator } from "./Navigator";
+import { Navigation } from "./Navigation";
 
 const queryClient = new QueryClient();
 
 export const App = (): JSX.Element => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Navigator />
+      <Navigation />
     </QueryClientProvider>
   );
 };

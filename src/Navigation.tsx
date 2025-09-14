@@ -7,7 +7,7 @@ import { THEME, useTheme } from "./theme";
 
 const Stack = createNativeStackNavigator();
 
-export const Navigator = (): JSX.Element => {
+export const Navigation = (): JSX.Element => {
   const theme = useTheme();
   return (
     <NavigationContainer>
