@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import { Text, View, Button, Pressable, Switch } from "react-native";
+import { View, Button, Pressable, Switch, StyleSheet } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
 import { PageContainer } from "../../components/PageContainer";
 import { useToDoQuery } from "./api/getToDo";
@@ -8,6 +8,7 @@ import { generateId } from "@/src/utils/generateId";
 import { useDeleteTodoMutation } from "./api/deleteTodo";
 import { useCheckTodoMutation } from "./api/checkTodo";
 import { THEME, useTheme } from "@/src/theme";
+import { Text } from "@/src/components/Text";
 
 type props = {
   navigation: NavigationProp<{}>;
@@ -48,15 +49,7 @@ export default function ToDo1({ navigation }: props): JSX.Element {
           paddingVertical: 20,
         }}
       >
-        <Text
-          style={{
-            color: THEME[theme].color.text,
-            fontSize: 20,
-            fontWeight: "bold",
-          }}
-        >
-          Список задач
-        </Text>
+        <Text style={styles.title}>Список задач</Text>
       </View>
       <View
         style={{
@@ -85,7 +78,7 @@ export default function ToDo1({ navigation }: props): JSX.Element {
             padding: 10,
           }}
         >
-          <Text style={{ color: THEME[theme].color.text }}>{item.title}</Text>
+          <Text>{item.title}</Text>
           <Pressable onPress={() => checkToDoHandler(item.id, !item.checked)}>
             <Switch
               value={item.checked}
@@ -97,10 +90,17 @@ export default function ToDo1({ navigation }: props): JSX.Element {
             />
           </Pressable>
           <Pressable onPress={() => deleteToDoHandler(item.id)}>
-            <Text style={{ color: THEME[theme].color.text }}>X</Text>
+            <Text>X</Text>
           </Pressable>
         </View>
       ))}
     </PageContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+});
