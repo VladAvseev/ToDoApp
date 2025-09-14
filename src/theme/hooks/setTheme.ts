@@ -1,13 +1,13 @@
 import { Repository } from "@/src/repository";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useAddTodoMutation = () => {
+export const useSetThemeMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: Repository.todo.addToDo,
+    mutationFn: Repository.theme.setTheme,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        predicate: ({ queryKey }) => queryKey.includes("todo"),
+        predicate: ({ queryKey }) => queryKey.includes("theme"),
       });
     },
   });

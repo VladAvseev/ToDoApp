@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export const useCheckTodoMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: Repository.checkToDo,
+    mutationFn: Repository.todo.checkToDo,
     onSuccess: () => {
       queryClient.invalidateQueries({
         predicate: ({ queryKey }) => queryKey.includes("todo"),

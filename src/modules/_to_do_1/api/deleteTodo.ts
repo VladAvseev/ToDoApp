@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export const useDeleteTodoMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: Repository.deleteTodo,
+    mutationFn: Repository.todo.deleteTodo,
     onSuccess: () => {
       queryClient.invalidateQueries({
         predicate: ({ queryKey }) => queryKey.includes("todo"),

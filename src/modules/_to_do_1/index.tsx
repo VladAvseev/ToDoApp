@@ -1,18 +1,20 @@
 import React, { JSX } from "react";
-import { Text, StyleSheet, View, Button, Pressable } from "react-native";
+import { Text, View, Button, Pressable, Switch } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
 import { PageContainer } from "../../components/PageContainer";
 import { useToDoQuery } from "./api/getToDo";
 import { useAddTodoMutation } from "./api/addTodo";
 import { generateId } from "@/src/utils/generateId";
 import { useDeleteTodoMutation } from "./api/deleteTodo";
-import { Repository } from "@/src/repository";
+import { useCheckTodoMutation } from "./api/checkTodo";
+import { THEME, useTheme } from "@/src/theme";
 
 type props = {
   navigation: NavigationProp<{}>;
 };
 
 export default function ToDo1({ navigation }: props): JSX.Element {
+  const theme = useTheme();
   const { data } = useToDoQuery();
 
   const addTodoMutation = useAddTodoMutation();
@@ -30,21 +32,75 @@ export default function ToDo1({ navigation }: props): JSX.Element {
     deleteToDoMutation.mutate(id);
   };
 
+  const checkToDoMutation = useCheckTodoMutation();
+  const checkToDoHandler = (id: number, value: boolean) => {
+    checkToDoMutation.mutate({ id, value });
+  };
+
   return (
     <PageContainer navigation={navigation}>
-      <Text>To Do List 1</Text>
-      <Button title="Добавить" onPress={addTodoHandler} />
+      <View
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 20,
+        }}
+      >
+        <Text
+          style={{
+            color: THEME[theme].color.text,
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Список задач
+        </Text>
+      </View>
+      <View
+        style={{
+          width: 200,
+          borderRadius: 10,
+          overflow: "hidden",
+          position: "absolute",
+          bottom: 80,
+          right: 20,
+        }}
+      >
+        <Button
+          title="Добавить"
+          onPress={addTodoHandler}
+          color={THEME[theme].color.primary}
+        />
+      </View>
       {data?.map((item) => (
-        <Pressable onPress={() => deleteToDoHandler(item.id)}>
-          <View>
-            <Text>
-              {item.id} {item.title} {item.checked ? "DONE" : "TO DO"}
-            </Text>
-          </View>
-        </Pressable>
+        <View
+          key={item.id}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: 10,
+          }}
+        >
+          <Text style={{ color: THEME[theme].color.text }}>{item.title}</Text>
+          <Pressable onPress={() => checkToDoHandler(item.id, !item.checked)}>
+            <Switch
+              value={item.checked}
+              trackColor={{
+                false: THEME[theme].color.secondary,
+                true: THEME[theme].color.secondary,
+              }}
+              thumbColor={THEME[theme].color.primary}
+            />
+          </Pressable>
+          <Pressable onPress={() => deleteToDoHandler(item.id)}>
+            <Text style={{ color: THEME[theme].color.text }}>X</Text>
+          </Pressable>
+        </View>
       ))}
     </PageContainer>
   );
 }
-
-const styles = StyleSheet.create({});
