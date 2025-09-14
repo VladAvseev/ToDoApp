@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import { View, Button, Pressable, Switch, StyleSheet } from "react-native";
+import { View, Pressable, Switch, StyleSheet, ScrollView } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
 import { PageContainer } from "../../components/PageContainer";
 import { useToDoQuery } from "./api/getToDo";
@@ -9,6 +9,7 @@ import { useDeleteTodoMutation } from "./api/deleteTodo";
 import { useCheckTodoMutation } from "./api/checkTodo";
 import { THEME, useTheme } from "@/src/theme";
 import { Text } from "@/src/components/Text";
+import { Button } from "@/src/components/Button";
 
 type props = {
   navigation: NavigationProp<{}>;
@@ -51,49 +52,45 @@ export default function ToDo1({ navigation }: props): JSX.Element {
       >
         <Text style={styles.title}>Список задач</Text>
       </View>
+      <ScrollView>
+        {data?.map((item) => (
+          <View
+            key={item.id}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: 10,
+            }}
+          >
+            <Text>{item.title}</Text>
+            <Pressable onPress={() => checkToDoHandler(item.id, !item.checked)}>
+              <Switch
+                value={item.checked}
+                trackColor={{
+                  false: THEME[theme].color.secondary,
+                  true: THEME[theme].color.secondary,
+                }}
+                thumbColor={THEME[theme].color.primary}
+              />
+            </Pressable>
+            <Pressable onPress={() => deleteToDoHandler(item.id)}>
+              <Text>X</Text>
+            </Pressable>
+          </View>
+        ))}
+      </ScrollView>
       <View
         style={{
-          width: 200,
-          borderRadius: 10,
-          overflow: "hidden",
-          position: "absolute",
-          bottom: 80,
-          right: 20,
+          width: "100%",
+          padding: 20,
+          zIndex: 1000,
+          backgroundColor: THEME[theme].color.background,
         }}
       >
-        <Button
-          title="Добавить"
-          onPress={addTodoHandler}
-          color={THEME[theme].color.primary}
-        />
+        <Button onPress={addTodoHandler}>Добавить</Button>
       </View>
-      {data?.map((item) => (
-        <View
-          key={item.id}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: 10,
-          }}
-        >
-          <Text>{item.title}</Text>
-          <Pressable onPress={() => checkToDoHandler(item.id, !item.checked)}>
-            <Switch
-              value={item.checked}
-              trackColor={{
-                false: THEME[theme].color.secondary,
-                true: THEME[theme].color.secondary,
-              }}
-              thumbColor={THEME[theme].color.primary}
-            />
-          </Pressable>
-          <Pressable onPress={() => deleteToDoHandler(item.id)}>
-            <Text>X</Text>
-          </Pressable>
-        </View>
-      ))}
     </PageContainer>
   );
 }

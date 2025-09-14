@@ -16,11 +16,12 @@ export const Tabs: React.FC<props> = ({ children }) => {
       left: 0,
       bottom: 0,
       width: "100%",
+      height: 60,
       backgroundColor: THEME[theme].color.primary,
     },
     tabs: {
       width: "100%",
-      paddingVertical: 20,
+      height: "100%",
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
